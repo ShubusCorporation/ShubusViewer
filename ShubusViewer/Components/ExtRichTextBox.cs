@@ -343,7 +343,6 @@ namespace ShubusViewer.Components
                                   break;
                           }                        
                         makeLighttening(mode);
-                        this.SelectionLength = 0;
                     }
                 }
             }

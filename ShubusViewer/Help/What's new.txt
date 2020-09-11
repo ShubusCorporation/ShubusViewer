@@ -1,0 +1,144 @@
+Shubus Viewer.
+What's new:
+
+Version 1.0.0.1 :
+
+    Shubus Viewer is rebuilded now and should work at least on the NET Framework 2.0 and higher!
+
+    CR 001 (+)
+    App should not try to detect text encoding for multimedia content.
+
+    CR 002 (?)
+    text is in the changed state after utf8 -> w1251 encoding
+
+    CR 003 (+)
+    "Send e-mail" item  does not appear in the context menu when shubus.corporation@gmail.com
+    is selected.
+
+    CR 004 (?)
+    Text blinks when encoding dlg closing
+
+    CR 005 (+)
+    Unapropriate Font changing when reencoding Croatian texts utf8 -> 1250;
+
+    CR 006 (+)
+    When the recent file is not found, the invalid item is not deleted.
+
+    CR 007 (+) (internal)
+    DlgAbout_Load should read text resource on the first launch only.
+
+    CR 008 (+)
+    Hex dumps of Japan texts look badly
+
+    CR 009 (+)
+    "Copy" Main menu item blinks when text is not selected and main window context menu
+    is invoked.
+
+    CR 010 (+)
+    "Open as URL" context menu item does not appear when selected URL string has '\r' or '\n'
+    at the end.
+
+    CR 011 (+)
+    Snowflake button does not appear when "New" text has been changed.
+
+    CR 012 (+)
+    "Zoom 100%" should not be shown in the Game mode.
+
+    CR 013 (+)
+    Add feature: Current version should be shown in the About dialog header.
+
+    CR 014 (+)
+    Add feature: "Text files" option from the Open Dialog should provide all text extensions.
+
+    CR 015 (+) (internal only)
+    Hex data -> New. Dump information string remains in the app header.
+
+    CR 016 (+)
+    Base64 encoded lines detecting: '/' character should be recognized.
+
+    CR 017 (+)
+    Add feature: Cortona3D player support (*.wrl *.wrz files).
+
+    CR 018 (+)
+    Add feature: Hosts file smart checking (accessible with Administrator rights only).
+
+    CR 019 (+)
+    Add feature: Encoding 1250 auto detecting.
+    (Tested for Czech and Croatian texts)
+
+    CR 020 (+)    
+    Fix syntax error in the some message strings.
+
+    CR 021 (+)
+    Case sentensive search should be available when current text is in the Text mode and locked .
+
+    CR 022 (+)
+    Add feature: Recent list should remember user preferred encoding for each stored file name.
+
+    CR 023 (+)
+    Add feature: Each file from the "Recent" list should be opened with the user preferred
+    encoding.
+
+    CR 024 (+)
+    Fix wrong RTL detecting in some *.NFO files.
+    
+    CR 025 (+)
+    *.NFO files code page detecting improvement.
+
+    CR 026 (+)
+    Remove 'Maximize' and 'Minimize' boxes from the dialog captions.
+
+    CR 027 (+)
+    Change default font/background colors.
+
+    CR 028 (+)
+    FOnts/Colors dialog: Font styles automatic applying should work.
+
+    CR 029 (+)
+    PgUp key should work in the dump mode for small files, when user set position to the end
+    of file via 'GoTo' dialog.
+
+    CR 030 (+)
+    Esc key pressing in the Mode dialog should close it immediately.
+
+    CR 031 (+)
+    Add feature: dynamic popup tips for scale buttons.
+
+Version 1.0.0.2 :
+
+    CR 032 (+)
+    App should not change encoding of the Recent files (favorites) after switching to the Browser mode.
+
+    CR 033 (+)
+    Assembly Copyright is changed to "Copyright © Shubus Corporation 2012 - 2013"
+    Assembly Version is changed to "1.0.0.2"
+
+
+Version 1.0.0.3:
+
+    CR 034 (+)
+    The names of the encodings should match.
+
+    CR 035 (+)
+    Copy and drug-n-drop operations should not keep text color from the App. text box.
+
+    CR 036 (+)
+    There is only one store for preferred files list should be created and it should be available for all versions of App.
+
+    CR 037 (+)
+    The character '~' should be detected as part of URL.
+
+    CR 038 (+)
+    The end-text bookmark in the recent files should be saved.
+
+    CR 039 (+)
+    Add feature: UTF-32/UTF-32BE support.
+
+    CR 040 (+)
+    The Search dialog fixes and improvements.
+    Add feature: Ctrl-H hot key works same as in the MS Word. The "^l" string means "new line" sign.
+
+
+Shubus Corporation Test / Quality Assurance.
+http://shubuscorporation.webs.com
+shubus.corporation@gmail.com
