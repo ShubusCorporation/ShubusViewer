@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{774F756A-E858-41EC-9E38-06AB9764B521}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ShubusViewer</RootNamespace>
+    <AssemblyName>ShubusViewer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ApplicationIcon>Resources\shubus.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <DefineConstants Condition=" '$(TargetFrameworkVersion)' == 'v4.0' ">RUNNING_ON_4</DefineConstants>
+    <DefineConstants Condition=" '$(TargetFrameworkVersion)' == 'v4.5' ">RUNNING_ON_4</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\ExtRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\ExtRichTextBoxAltMode.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\SettingsProvider.cs" />
+    <Compile Include="Components\TextProcessor.cs" />
+    <Compile Include="Dialogs\DlgFirstTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DlgFirstTime.Designer.cs">
+      <DependentUpon>DlgFirstTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgRecentDescr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DlgRecentDescr.Designer.cs">
+      <DependentUpon>DlgRecentDescr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engines\AppUpdater.cs" />
+    <Compile Include="Dialogs\AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AboutBox1.Designer.cs">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Engines\AppAbstractModel.cs" />
+    <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Engines\DirectoryExplorer.cs" />
+    <Compile Include="Engines\DlgManager.cs" />
+    <Compile Include="Forms\Form1ViewManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form1WebBrowserProcessing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\ITextProcessor.cs" />
+    <Compile Include="Utils\Tuple.cs" />
+    <Compile Include="Utils\Utils.cs" />
+    <Compile Include="Utils\AppExtendedData.cs" />
+    <Compile Include="Engines\AppModel.cs" />
+    <Compile Include="Engines\AppModelFacade.cs" />
+    <Compile Include="Engines\AppRecent.cs" />
+    <Compile Include="Engines\AppWebModel.cs" />
+    <Compile Include="Dialogs\DlgAddress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DlgAddress.Designer.cs">
+      <DependentUpon>DlgAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgGoTo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DlgGoTo.Designer.cs">
+      <DependentUpon>DlgGoTo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DlgMode.Designer.cs">
+      <DependentUpon>DlgMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DlgView.Designer.cs">
+      <DependentUpon>DlgView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\ExtListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\MyBrowser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="Utils\SharedData.cs" />
+    <Compile Include="Dialogs\DlgDecoder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DlgDecoder.Designer.cs">
+      <DependentUpon>DlgDecoder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DlgSearch.Designer.cs">
+      <DependentUpon>DlgSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Dialogs\AboutBox1.resx">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DlgDecoder.resx">
+      <DependentUpon>DlgDecoder.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DlgGoTo.resx">
+      <DependentUpon>DlgGoTo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DlgMode.resx">
+      <DependentUpon>DlgMode.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DlgSearch.resx">
+      <DependentUpon>DlgSearch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DlgView.resx">
+      <DependentUpon>DlgView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dialogs\DlgAddress.resx">
+      <DependentUpon>DlgAddress.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DlgFirstTime.resx">
+      <DependentUpon>DlgFirstTime.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DlgRecentDescr.resx">
+      <DependentUpon>DlgRecentDescr.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\About.txt" />
+    <EmbeddedResource Include="Resources\License.txt" />
+    <Content Include="Resources\arrow.PNG" />
+    <Content Include="Resources\blackplus.JPG" />
+    <Content Include="Resources\shubus.ico" />
+    <Content Include="Resources\shubus.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
