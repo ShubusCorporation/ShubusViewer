@@ -16,6 +16,36 @@ namespace FSProvider
         int curFileNumber;
         List<string> files = new List<string>();
 
+        // Same as "((\\.jpg)|(\\.jpeg)|(\\.bmp)|(\\.gif)|(\\.png)|(\\.ico)|(\\.emf)|(\\.wmf)|(\\.webp))$" from AppWebModel
+        static string[] pictureExts = { ".jpg", ".jpeg", ".bmp", ".gif", ".png", ".ico", ".emf", ".wmf", ".webp" };
+        public static IEnumerable<FileInfo> GetFilesByType(DirectoryInfo dir, string ext)
+        {
+            if (string.IsNullOrEmpty(ext) || string.IsNullOrWhiteSpace(ext)) {
+                ext = string.Empty;
+            }
+            if (pictureExts.Any(pext => pext.Contains(ext.ToLower())))
+                return GetFilesByExtensions(dir, pictureExts);
+            return GetFilesByExtensions(dir, ext);
+        }
+
+        // https://stackoverflow.com/questions/3527203/getfiles-with-multiple-extensions
+        public static IEnumerable<FileInfo> GetFilesByExtensions(DirectoryInfo dir, params string[] extensions)
+        {
+            IEnumerable<FileInfo> ret = null;
+
+            if (extensions.Length == 1)
+            {
+                var extMask = extensions[0];
+                extMask = string.IsNullOrEmpty(extMask) ? "*" : "*." + extMask;
+                ret = dir.GetFiles(extMask);
+            }
+            else if (extensions.Length > 1)
+            {
+                ret = dir.EnumerateFiles().Where(f => extensions.Contains(f.Extension));
+            }
+            return ret;
+        }
+
         private void Init(string fn)
         {
             int i = 0;
@@ -28,9 +58,8 @@ namespace FSProvider
             curFileNumber = 0;
 
             string extMask = Utils.Utils.getExtension(fn);
-            extMask = string.IsNullOrEmpty(extMask) ? "*" : "*." + extMask;
             
-            foreach (FileInfo file in dir.GetFiles(extMask))
+            foreach (FileInfo file in GetFilesByType(dir, extMask))
             {
                 if (extMask == "*" && !string.IsNullOrEmpty(Utils.Utils.getExtension(file.FullName)))
                 {

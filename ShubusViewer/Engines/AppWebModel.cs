@@ -24,7 +24,7 @@ namespace WebDataProcessor
         private const string swVersion = "**";
 
         // It's public for using by AppModelFacade.
-        public readonly string extPicture =  "((\\.jpg)|(\\.jpeg)|(\\.bmp)|(\\.gif)|(\\.png)|(\\.ico)|(\\.emf)|(\\.wmf))$".ToLower();
+        public readonly string extPicture =  "((\\.jpg)|(\\.jpeg)|(\\.bmp)|(\\.gif)|(\\.png)|(\\.ico)|(\\.emf)|(\\.wmf)|(\\.webp))$".ToLower();
         private readonly string extCortona3D = "((\\.wrl)|(\\.wrz))$".ToLower();
         private readonly string[] headers = { "www.", "http:", "https:", "about:", "ftp:" };
         private const string localHost = "localhost";
