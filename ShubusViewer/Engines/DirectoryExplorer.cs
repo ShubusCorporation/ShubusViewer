@@ -17,14 +17,26 @@ namespace FSProvider
         List<string> files = new List<string>();
 
         // Same as "((\\.jpg)|(\\.jpeg)|(\\.bmp)|(\\.gif)|(\\.png)|(\\.ico)|(\\.emf)|(\\.wmf)|(\\.webp))$" from AppWebModel
+        static string noExt = ".";
         static string[] pictureExts = { ".jpg", ".jpeg", ".bmp", ".gif", ".png", ".ico", ".emf", ".wmf", ".webp" };
+        static string[] textExts = {
+                                     ".txt", ".tex", ".text", ".md", ".me", ".nfo", ".config",
+                                     ".log", ".ini", ".json", ".err", ".cmd", ".bat", ".sh", noExt 
+                                   };
+        static string[][] extGroups = { pictureExts, textExts };
+
         public static IEnumerable<FileInfo> GetFilesByType(DirectoryInfo dir, string ext)
         {
             if (string.IsNullOrEmpty(ext) || string.IsNullOrWhiteSpace(ext)) {
-                ext = string.Empty;
+                ext = noExt;
             }
-            if (pictureExts.Any(pext => pext.Contains(ext.ToLower())))
-                return GetFilesByExtensions(dir, pictureExts);
+            foreach (var group in extGroups)
+            {
+                if (group.Any(pext => pext.EndsWith(ext.ToLower())))
+                {
+                    return GetFilesByExtensions(dir, group);
+                }
+            }                    
             return GetFilesByExtensions(dir, ext);
         }
 
@@ -35,13 +47,14 @@ namespace FSProvider
 
             if (extensions.Length == 1)
             {
-                var extMask = extensions[0];
-                extMask = string.IsNullOrEmpty(extMask) ? "*" : "*." + extMask;
+                var extMask = extensions[0] == noExt ? "*" : "*." + extensions[0];
                 ret = dir.GetFiles(extMask);
             }
             else if (extensions.Length > 1)
             {
-                ret = dir.EnumerateFiles().Where(f => extensions.Contains(f.Extension));
+                ret = extensions.Contains(noExt) 
+                    ? dir.EnumerateFiles().Where(f => string.IsNullOrEmpty(f.Extension) || extensions.Contains(f.Extension))
+                    : dir.EnumerateFiles().Where(f => extensions.Contains(f.Extension));
             }
             return ret;
         }
@@ -61,10 +74,6 @@ namespace FSProvider
             
             foreach (FileInfo file in GetFilesByType(dir, extMask))
             {
-                if (extMask == "*" && !string.IsNullOrEmpty(Utils.Utils.getExtension(file.FullName)))
-                {
-                    continue;
-                }
                 if (string.Compare(fn, file.FullName, true) == 0)
                 {
                     curFileNumber = i;
