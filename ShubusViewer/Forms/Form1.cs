@@ -21,7 +21,6 @@ namespace ShubusViewer // BackColor = Gainsboro
         private AppController myController;
         private DlgSearch  dlgSearch;
         private DlgDecoder dlgDecoder;
-        private DlgAbout   dlgAbout;
         private DlgView    dlgView;
         private DlgMode dlgMode;
         private DlgGoTo dlgGoTo;
@@ -1500,12 +1499,8 @@ namespace ShubusViewer // BackColor = Gainsboro
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.dlgAbout == null)
-            {
-                this.dlgAbout = new DlgAbout(this.mySharedData);
-                this.mngrDlg.Add(dlgAbout);
-            }
-            this.dlgAbout.ShowDialog();
+            var dlgAbout = new DlgAbout(this.mySharedData);
+            dlgAbout.Show(this);
 
             if (this.textBox1.Focused == false && this.webBrowser1.Visible == false)
             {
@@ -1716,7 +1711,7 @@ namespace ShubusViewer // BackColor = Gainsboro
                 this.fullpathView = false;
                 this.myController.processOperation(TypeAction.EUpdateCaption);
             }
-            else if (this.TopMost)
+            else if (this.TopMost && !this.Disposing)
             {
                 this.Opacity = 0.8;
             }

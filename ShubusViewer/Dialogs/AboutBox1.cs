@@ -78,8 +78,7 @@ namespace ShubusViewer
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     Form2 game = new Form2();
-                    game.TopMost = this.TopMost;
-                    game.Show();
+                    game.Show(this);
                 }
             }
         }
