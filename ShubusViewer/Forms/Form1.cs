@@ -656,7 +656,24 @@ namespace ShubusViewer // BackColor = Gainsboro
 
             int xb = this.LArrButton.Visible ? this.LArrButton.Location.X : this.LaunchButton.Location.X;
             this.button1.Location = new Point(xb - this.button2.Width - delta1, button2.Location.Y);
-            this.button2.Location = new Point(this.button1.Location.X - this.button2.Width - delta1, button2.Location.Y);      
+            this.button2.Location = new Point(this.button1.Location.X - this.button2.Width - delta1, button2.Location.Y);
+
+            var xleft = this.menuStrip1.Location.X + delta1;
+
+            for (int i = 0; i < this.menuStrip1.Items.Count; i++)
+            {
+                if (this.menuStrip1.Items[i].Visible 
+                    && this.menuStrip1.Items[i].Alignment == ToolStripItemAlignment.Left)
+                {
+                    xleft += this.menuStrip1.Items[i].Width;
+                }
+            }
+            var xright = this.button2.Visible ? button2.Location.X - delta1 : xb - delta1;
+            var boxWidth = xright - xleft;
+
+            this.textBox2.Location = new Point(xleft, this.textBox2.Location.Y);
+            this.textBox2.Width = boxWidth;
+            this.textBox2.Visible = true;
         }
 
         private void setEncodingToolTips() // CR 048
@@ -2126,6 +2143,26 @@ namespace ShubusViewer // BackColor = Gainsboro
             }
             this.textBox2.SelectionStart = 0;
             this.textBox2.SelectionLength = this.textBox2.Text.Length;            
+        }
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            webBrowser1_DocumentCompleted1(sender, e);
+        }
+
+        private void webBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
+        {
+            webBrowser1_Navigated1(sender, e);
+        }
+
+        private void webBrowser1_VisibleChanged(object sender, EventArgs e)
+        {
+            webBrowser1_VisibleChanged1(sender, e);
+        }
+
+        private void webBrowser1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            webBrowser1_PreviewKeyDown1(sender, e);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

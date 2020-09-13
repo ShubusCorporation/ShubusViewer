@@ -18,7 +18,7 @@ namespace ShubusViewer
             this.webBrowser1.Visible = true;
         }
 
-        private void WebBrowserClosePage()
+        private void WebBrowserClosePage1()
         {
             if (this.webBrowser1.Visible)
             {
@@ -28,7 +28,7 @@ namespace ShubusViewer
             }
         }
 
-        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        private void webBrowser1_DocumentCompleted1(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             // http://msug.vn.ua/Posts/Details/3769
             if (string.Equals(e.Url.AbsolutePath
@@ -40,7 +40,7 @@ namespace ShubusViewer
             this.doOnDocumentReady(sender);
         }
 
-        private void webBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
+        private void webBrowser1_Navigated1(object sender, WebBrowserNavigatedEventArgs e)
         {
             if (string.Equals(e.Url.AbsolutePath
                 , (sender as WebBrowser).Url.AbsolutePath
@@ -134,7 +134,7 @@ namespace ShubusViewer
             //this.Padding = new Padding(250, 0, 0, 0);
         }
 
-        private void webBrowser1_VisibleChanged(object sender, EventArgs e)
+        private void webBrowser1_VisibleChanged1(object sender, EventArgs e)
         {
             this.checkBox1.Visible = !this.webBrowser1.Visible;
 
@@ -163,7 +163,7 @@ namespace ShubusViewer
             }
         }
 
-        private void webBrowser1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void webBrowser1_PreviewKeyDown1(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.M && this.FormBorderStyle == FormBorderStyle.Sizable)
             {

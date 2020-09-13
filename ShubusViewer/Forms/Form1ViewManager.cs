@@ -103,14 +103,10 @@ namespace ShubusViewer
 
             private void updateButtons()
             {
-                this.mainForm.button3.Visible = this.mainForm.LaunchButton.Visible
-                = this.mainForm.textBox2.Visible = this.mainForm.groupBox1.Visible
-                = (this.mainForm.FormBorderStyle != FormBorderStyle.None);
-               /*     !((this.mainForm.FormBorderStyle == FormBorderStyle.None) ||
-                      ((false == this.mainForm.favListNotEmpty &&
-                      (false == this.mainForm.checkAdmin()) &&
-                      (this.currentViewMode & EViewMode.EModeTextEmpty) == EViewMode.EModeTextEmpty)
-                     ));*/
+                this.mainForm.button3.Visible 
+                    = this.mainForm.LaunchButton.Visible
+                    = this.mainForm.textBox2.Visible
+                    = (this.mainForm.FormBorderStyle != FormBorderStyle.None);
 
                 bool vis = (this.mainForm.FormBorderStyle == FormBorderStyle.None) ||
                     (this.currentViewMode & EViewMode.EModeNameDefault) == EViewMode.EModeNameDefault;
@@ -149,7 +145,7 @@ namespace ShubusViewer
                         if ((this.currentViewMode & EViewMode.EModeBrowser) == EViewMode.EModeBrowser)
                         {
                             this.currentViewMode ^= EViewMode.EModeBrowser;
-                            this.mainForm.WebBrowserClosePage();
+                            this.mainForm.WebBrowserClosePage1();
                         }
                     }
                     this.currentViewMode |= mode;
