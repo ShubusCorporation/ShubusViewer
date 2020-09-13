@@ -673,7 +673,6 @@ namespace ShubusViewer // BackColor = Gainsboro
 
             this.textBox2.Location = new Point(xleft, this.textBox2.Location.Y);
             this.textBox2.Width = boxWidth;
-            this.textBox2.Visible = true;
         }
 
         private void setEncodingToolTips() // CR 048

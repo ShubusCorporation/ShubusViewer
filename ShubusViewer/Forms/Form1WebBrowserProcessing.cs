@@ -179,11 +179,11 @@ namespace ShubusViewer
                     if (this.FormBorderStyle == FormBorderStyle.Sizable)
                     {
                         this.WindowState = FormWindowState.Normal;
-                        this.menuStrip1.Visible = false;
+                        this.menuStrip1.Visible = this.textBox2.Visible = false;
 
                         this.webBrowser1.Location = new Point(0, 0);
                         this.webBrowser1.Size = new Size(this.webBrowser1.Size.Width
-                            , this.webBrowser1.Size.Height + this.menuStrip1.Size.Height);
+                            , this.webBrowser1.Size.Height + this.menuStrip1.Size.Height + 1);
 
                         this.FormBorderStyle = FormBorderStyle.None;
                         this.appNotificationHandler(TypeNotification.ETextRestored);
@@ -192,10 +192,10 @@ namespace ShubusViewer
                     else
                     {
                         this.WindowState = FormWindowState.Normal;
-                        this.menuStrip1.Visible = true;
+                        this.menuStrip1.Visible = this.textBox2.Visible = true;
 
                         this.webBrowser1.Location = new Point(this.webBrowser1.Location.X
-                            , this.menuStrip1.Size.Height);
+                            , this.menuStrip1.Size.Height + 1);
                         this.webBrowser1.Size = new Size(this.webBrowser1.Size.Width
                             , this.webBrowser1.Size.Height - this.menuStrip1.Size.Height);
 
