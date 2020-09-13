@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using SearchData;
 
 namespace ShubusViewer
 {
@@ -25,25 +23,39 @@ namespace ShubusViewer
         }
         public bool cbox1
         { 
-            get { return this.checkBox1.Checked; }
-            set { this.checkBox1.Checked = value; }
+            get { return this.findSameCaseCheckBox.Checked; }
+            set { this.findSameCaseCheckBox.Checked = value; }
         }
         public bool cbox2
         {
-            get { return this.checkBox2.Checked; }
-            set { this.checkBox2.Checked = value; }
+            get { return this.replaceWholeWordCheckBox.Checked; }
+            set { this.replaceWholeWordCheckBox.Checked = value; }
         }
         public bool cbox3
         {
-            get { return this.checkBox3.Checked; }
-            set { this.checkBox3.Checked = value; }
+            get { return this.replaceSameCaseCheckBox.Checked; }
+            set { this.replaceSameCaseCheckBox.Checked = value; }
         }
-        public int ActiveTab{ get; set; }
+        public int ActiveTab { get; set; }
         private string txtToFind = "";
         private int curTab;
         private TabPage second;
         private bool oldCHeckBox = false;
         private Dictionary<string, string> myDictionary = null;
+        private SearchDialogData searchDTO;
+        private searchCallback findCB;
+        private searchCallback replaceCB;
+
+        private void UpdateDTO()
+        {
+            this.searchDTO.findSameCase = this.cbox1;
+            this.searchDTO.replaceWholeWord = this.wholeWords;
+            this.searchDTO.replaceSameCase = this.cbox3;
+            this.searchDTO.txtFind = this.txtFind;
+            this.searchDTO.txtWhat = this.txtWhat;
+            this.searchDTO.txtWith = this.txtWith;
+            this.searchDTO.dirty = true;
+        }
 
         public bool secondTab
         {
@@ -52,12 +64,12 @@ namespace ShubusViewer
                 if (value && tabControl1.TabPages.Count < 2)
                 {
                     tabControl1.TabPages.Add(second);
-                    this.checkBox1.Checked = this.oldCHeckBox;
+                    this.findSameCaseCheckBox.Checked = this.oldCHeckBox;
                 }
                 else if (value == false && tabControl1.TabPages.Count > 1)
                 {
                     tabControl1.TabPages.Remove(tabControl1.TabPages[1]);
-                    this.oldCHeckBox = this.checkBox1.Checked;
+                    this.oldCHeckBox = this.findSameCaseCheckBox.Checked;
                 }
             }
         }
@@ -68,12 +80,12 @@ namespace ShubusViewer
             {
                 if (value)
                 {
-                    this.checkBox1.Enabled = true;
+                    this.findSameCaseCheckBox.Enabled = true;
                 }
                 else
                 {
-                    this.checkBox1.Checked = true;
-                    this.checkBox1.Enabled = false;
+                    this.findSameCaseCheckBox.Checked = true;
+                    this.findSameCaseCheckBox.Enabled = false;
                 }
             }
         }
@@ -96,50 +108,40 @@ namespace ShubusViewer
             }
         }
 
-        public StringComparison sComparison
-        {
-            get
-            {
-                if (this.checkBox1.Checked)
-                {
-                    return StringComparison.CurrentCulture;
-                }
-                else
-                {
-                    return StringComparison.InvariantCultureIgnoreCase;
-                }
-            }
-        }
-
-        public StringComparison rComparison
-        {
-            get
-            {
-                if (this.checkBox3.Checked)
-                {
-                    return StringComparison.CurrentCulture;
-                }
-                else
-                {
-                    return StringComparison.InvariantCultureIgnoreCase;
-                }
-            }
-        }
-
         public bool wholeWords
         {
             get
             {
                 if (this.textBox2.Text == "^l" || this.textBox3.Text == "^l") return false;
 
-                return this.checkBox2.Checked;
+                return this.replaceWholeWordCheckBox.Checked;
             }
         }
 
-        public DlgSearch()
+        private void doFindCB()
+        {
+            this.UpdateDTO();
+            this.findCB();
+        }
+
+        private void doReplaceCB()
+        {
+            this.UpdateDTO();
+            this.replaceCB();
+        }
+
+        public DlgSearch(SearchDialogData searchData, searchCallback findCB, searchCallback replaceCB)
         {
             InitializeComponent();
             this.second = this.tabControl1.TabPages[1];
+            this.searchDTO = searchData;
+
+            this.cbox1 = this.searchDTO.findSameCase;
+            this.cbox2 = this.searchDTO.replaceWholeWord;
+            this.cbox3 = this.searchDTO.replaceSameCase;
+            this.txtFind = this.searchDTO.txtFind;
+            this.findCB = findCB;
+            this.replaceCB = replaceCB;
         }
 
         private void DlgSearch_KeyDown(object sender, KeyEventArgs e)
@@ -147,9 +149,9 @@ namespace ShubusViewer
             switch(e.KeyCode)
             {
                 case Keys.F3:
+                    e.SuppressKeyPress = true;
                     this.txtFind = this.textBox1.Text;
-                    this.DialogResult = System.Windows.Forms.DialogResult.OK;
-                    this.Close();
+                    this.doFindCB(); // Callback FindFirst / FindNext
                     break;
 
                 case Keys.Escape:
@@ -159,20 +161,20 @@ namespace ShubusViewer
                     break;
             }
         }
-        // DialogResult.OK;
-        private void button1_Click(object sender, EventArgs e)
+
+        private void searchButton_Click(object sender, EventArgs e)
         {
             this.txtFind = this.textBox1.Text;
-            this.Close();
+            this.doFindCB(); // Callback FindFirst / FindNext
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                this.DialogResult = this.button1.DialogResult;
+                this.DialogResult = this.searchButton.DialogResult;
                 this.txtFind = this.textBox1.Text;
-                this.Close();
+                this.doFindCB(); //  Callback FindFirst / FindNext
             }
         }
 
@@ -191,14 +193,13 @@ namespace ShubusViewer
             this.tabControl1_SelectedIndexChanged(sender, null);
         }
 
-        // DialogResult.Retry;
-        private void button2_Click(object sender, EventArgs e)
+        private void replaceButton_Click(object sender, EventArgs e)
         {
-            if (true == (this.button2.Enabled = this.checkReplaceData()))
+            if (true == (this.replaceButton.Enabled = this.checkReplaceData()))
             {
                 this.txtFind = this.textBox2.Text;
                 this.fillDictionary();
-                this.Close();
+                this.doReplaceCB(); // Callback Replace
             }
         }
 
@@ -213,7 +214,7 @@ namespace ShubusViewer
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void arrowButton_Click(object sender, EventArgs e)
         {
             string str = this.textBox2.Text;
             this.textBox2.Text = this.textBox3.Text;
@@ -223,7 +224,7 @@ namespace ShubusViewer
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            this.button2.Enabled = this.checkReplaceData();
+            this.replaceButton.Enabled = this.checkReplaceData();
             this.txtFind = this.textBox2.Text;
 
             if (this.myDictionary != null)
@@ -238,6 +239,7 @@ namespace ShubusViewer
                         (x => x.Value == this.txtFind).Key;
                 }
             }
+            this.UpdateDTO();
         }
 
         private bool checkReplaceData()
@@ -260,9 +262,9 @@ namespace ShubusViewer
                 {
                     this.textBox1.SelectionStart = 0;
                     this.textBox1.SelectionLength = textBox1.TextLength;
-                    this.button1.Enabled = true;
+                    this.searchButton.Enabled = true;
                 }
-                else this.button1.Enabled = false;
+                else this.searchButton.Enabled = false;
             }
             if (this.curTab == 1) // Find & Replace tab.
             {
@@ -292,31 +294,48 @@ namespace ShubusViewer
             }
             else if (e.KeyCode == Keys.Enter && checkReplaceData())
             {
-                this.DialogResult = this.button2.DialogResult;
+                this.DialogResult = this.replaceButton.DialogResult;
                 this.fillDictionary();
-                this.Close();
+                this.doReplaceCB();  // Callback 'Replace'
             }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            this.button1.Enabled = (this.textBox1.Text.Length > 0);
+            this.searchButton.Enabled = (this.textBox1.Text.Length > 0);
             this.txtFind = this.textBox1.Text;
+            this.UpdateDTO();
         }
 
-        private void checkBox1_Click(object sender, EventArgs e)
+        private void findSameCaseCheckBox_Click(object sender, EventArgs e)
         {
-            if (this.checkBox1.Enabled)
-                this.oldCHeckBox = this.checkBox1.Checked;
+            if (this.findSameCaseCheckBox.Enabled)
+                this.oldCHeckBox = this.findSameCaseCheckBox.Checked;
+            this.UpdateDTO();
         }
 
         private void DlgSearch_Resize(object sender, EventArgs e)
         {
-            this.button1.Location =
-            new Point((this.Size.Width - this.button1.Size.Width) / 2, this.button1.Location.Y);
+            this.searchButton.Location =
+            new Point((this.Size.Width - this.searchButton.Size.Width) / 2, this.searchButton.Location.Y);
 
-            this.button2.Location =
-            new Point((this.Size.Width - this.button2.Size.Width) / 2, this.button2.Location.Y);
+            this.replaceButton.Location =
+            new Point((this.Size.Width - this.replaceButton.Size.Width) / 2, this.replaceButton.Location.Y);
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            this.UpdateDTO();
+        }
+
+        private void replaceWholeWordCheckBox_Click(object sender, EventArgs e)
+        {
+            this.UpdateDTO();
+        }
+
+        private void replaceSameCaseCheckBox_Click(object sender, EventArgs e)
+        {
+            this.UpdateDTO();
         }
     }
 }

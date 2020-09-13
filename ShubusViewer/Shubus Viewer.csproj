@@ -91,6 +91,10 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Engines\DirectoryExplorer.cs" />
     <Compile Include="Engines\DlgManager.cs" />
+    <Compile Include="Forms\Form1Search.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utils\SearchData.cs" />
     <Compile Include="Forms\Form1ViewManager.cs">
       <SubType>Form</SubType>
     </Compile>

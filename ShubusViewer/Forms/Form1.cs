@@ -1,15 +1,14 @@
-﻿using System;
+﻿using ExtendedData;
+using FSProvider;
+using ShubusViewer.Engines;
+using ShubusViewer.Interfaces;
+using StateMachine;
+using System;
+using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
-using System.Drawing;
-using StateMachine;
-using ExtendedData;
 using System.Text.RegularExpressions;
-using FSProvider;
-using ShubusViewer.Interfaces;
-using System.Collections.Generic;
-using ShubusViewer.Engines;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace ShubusViewer // BackColor = Gainsboro
@@ -19,7 +18,6 @@ namespace ShubusViewer // BackColor = Gainsboro
         private const int LEFT_PANEL_WIDTH = 16;
         private int txtIndex;
         private AppController myController;
-        private DlgSearch  dlgSearch;
         private DlgDecoder dlgDecoder;
         private DlgView    dlgView;
         private DlgMode dlgMode;
@@ -866,20 +864,6 @@ namespace ShubusViewer // BackColor = Gainsboro
             catch (Exception) { }
         }
 
-
-        void CreateSearchDlg()
-        {
-            Properties.Settings ps = Properties.Settings.Default;
-
-            this.dlgSearch = new DlgSearch();
-            this.dlgSearch.txtFind = ps.textDlgSearch;
-            this.dlgSearch.cbox1 = ps.cb1DlgSearch;
-            this.dlgSearch.cbox2 = ps.cb2DlgSearch;
-            this.dlgSearch.cbox3 = ps.cb3DlgSearch;
-            this.mngrDlg.Add(dlgSearch);
-        }
-
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.stateClosing = true;
@@ -914,12 +898,12 @@ namespace ShubusViewer // BackColor = Gainsboro
             ps.myFgColor = this.textBox1.ForeColor.Name;
             ps.iamMaximized = (this.WindowState == FormWindowState.Maximized);
 
-            if (this.dlgSearch != null)
+            if (this.searchDTO.dirty)
             {
-                ps.textDlgSearch = this.dlgSearch.txtFind;
-                ps.cb1DlgSearch = this.dlgSearch.cbox1;
-                ps.cb2DlgSearch = this.dlgSearch.cbox2;
-                ps.cb3DlgSearch = this.dlgSearch.cbox3;
+                ps.textDlgSearch = this.searchDTO.txtFind;
+                ps.cb1DlgSearch = this.searchDTO.findSameCase;
+                ps.cb2DlgSearch = this.searchDTO.replaceWholeWord;
+                ps.cb3DlgSearch = this.searchDTO.replaceSameCase;
             }
             ps.myHorizontal = this.checkBox1.Checked;
             ps.autoApplyColor = DlgView.AutoApplyColor;
@@ -1019,12 +1003,7 @@ namespace ShubusViewer // BackColor = Gainsboro
                     break;
 
                 case Keys.F3:
-                    if (this.txtIndex > -1)
-                    {
-                        if (this.findNext() == false)
-                            this.doNewSearch();
-                    }
-                    else this.findFirst();
+                    this.SearchCallback();
                     break;
 
                 case Keys.C: // Copy
@@ -1178,18 +1157,6 @@ namespace ShubusViewer // BackColor = Gainsboro
             }
         }
 
-        private void doNewSearch()
-        {
-            if (this.dlgSearch == null) return;
-            string msg = "Data:\r\n\r\n" + this.dlgSearch.txtFind + "\r\n\r\n"+ Constants.STR_LASTDATA_MSG;
-
-            if (MessageBox.Show(msg, Constants.STR_APP_TITLE
-              , MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                this.findFirst();
-            }
-            else textBox1.Focus();
-        }
 
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1199,52 +1166,6 @@ namespace ShubusViewer // BackColor = Gainsboro
         private void goTOThePositionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showGotoDialog();
-        }
-
-        private void showFindDialog(int aTab)
-        {
-            if (this.dlgSearch == null)
-            {
-                this.CreateSearchDlg();
-            }
-            bool secondTab = (this.myViewManager.getMode(
-                ViewManager.EViewMode.EModeTextLocked) == 
-                ViewManager.EViewMode.EModeNone
-                );
-
-            this.dlgSearch.secondTab = secondTab;
-
-            if (secondTab == false && aTab == 1) return;
-
-            this.dlgSearch.ActiveTab = aTab;
-
-            this.dlgSearch.caseSensitive = (this.myViewManager.getMode(
-             ViewManager.EViewMode.EModeBinary) ==
-             ViewManager.EViewMode.EModeNone
-             );
-
-            if (this.textBox1.SelectionLength > 0)
-                this.dlgSearch.txtFind = this.textBox1.SelectedText;
-
-            DialogResult res = this.dlgSearch.ShowDialog();
-
-            if (res == DialogResult.OK)
-            {
-                this.findFirst();
-            }
-            else if (res == DialogResult.Retry)
-            {
-                try
-                {
-                    findReplace();
-                }
-                catch (Exception ee)
-                {
-                    MessageBox.Show(ee.Message, Constants.STR_APP_TITLE
-                    , MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else this.textBox1.SelectionLength = 0;
         }
 
         private void showGotoDialog()
@@ -1300,198 +1221,7 @@ namespace ShubusViewer // BackColor = Gainsboro
             this.textBox1.TextChanged += this.textBox1_TextChanged;
             this.SaveFont();
         }
-
-        private void findReplace()
-        {
-            int occur = 0;
-            string news = "";
-            string olds = textBox1.Text;
-            int oldSelection = this.textBox1.SelectionStart;
-            int oldSelectionL = this.textBox1.SelectionLength;
-
-            if (dlgSearch.txtWhat == "") return;
-            char chLeft = ' ';
-
-            while (true)
-            {
-                int ind = olds.IndexOf(dlgSearch.txtWhat, 0, dlgSearch.rComparison);
-
-                if (ind < 0)
-                {
-                    news += olds;
-                    break;
-                }
-                if (dlgSearch.wholeWords)
-                {
-                    chLeft = (ind > 0) ? olds[ind - 1] : chLeft;
-                    char chRight = (ind + dlgSearch.txtWhat.Length > olds.Length - 1) ?
-                        ' ' : olds[ind + dlgSearch.txtWhat.Length];
-
-                    if (char.IsLetterOrDigit(chLeft) || char.IsLetterOrDigit(chRight))
-                    {
-                        news += olds.Substring(0, ind + dlgSearch.txtWhat.Length);
-                        chLeft = olds[ind + dlgSearch.txtWhat.Length - 1];
-                        olds = olds.Substring(ind + dlgSearch.txtWhat.Length);
-                        continue;
-                    }
-                    else occur++;
-                }
-                else occur++;
-
-                news += olds.Substring(0, ind);
-                news += dlgSearch.txtWith;
-                chLeft = olds[ind + dlgSearch.txtWhat.Length - 1];
-                olds = olds.Substring(ind + dlgSearch.txtWhat.Length);
-            }
-            if (occur > 0)
-                textBox1.Text = news;
-
-            try
-            {
-                this.textBox1.SelectionStart = oldSelection;
-                this.textBox1.SelectionLength = oldSelectionL;
-            }
-            catch
-            {
-                this.textBox1.SelectionStart = textBox1.SelectionLength = 0;
-            }
-            MessageBox.Show(occur.ToString() + Constants.STR_REPLACE_DLG
-            , Constants.STR_APP_TITLE, MessageBoxButtons.OK
-            , MessageBoxIcon.Information);
-         }
-
-
-        private void findFirst()
-        {
-            if (this.dlgSearch == null) return;
-
-            if (this.myViewManager.getMode(
-                ViewManager.EViewMode.EModeBinary) ==
-                ViewManager.EViewMode.EModeBinary)
-            {
-                findFirstBin();
-            }
-            else
-            {
-                findFirstText();
-            }
-        }
-
-        private void findFirstBin()
-        {
-            if (this.myController.searchInDump(this.dlgSearch.txtFind, 0))
-            {
-                this.myController.processOperation(TypeAction.EDumpUpdate);
-
-                if (this.mySharedData.basicInfo.hexDump.startIndex > 0)
-                {
-                    this.txtIndex = 16;
-                }
-                else this.txtIndex = 0;
-
-                this.textBox1.SelectionStart = this.txtIndex;
-
-                if (this.mySharedData.basicInfo.hexDump.isHex == false)
-                {
-                    this.textBox1.SelectionLength = this.dlgSearch.txtFind.Length;
-                }
-            }
-            else
-            {
-                this.txtIndex = -1;
-
-                MessageBox.Show(Constants.STR_NOTFOUND_MSG + this.dlgSearch.txtFind, Constants.STR_APP_TITLE
-                  , MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void findFirstText()
-        {
-            this.txtIndex = textBox1.Text.IndexOf(this.dlgSearch.txtFind
-                , 0, dlgSearch.sComparison);
-
-            if (this.txtIndex == -1)
-            {
-                MessageBox.Show(Constants.STR_NOTFOUND_MSG + this.dlgSearch.txtFind, Constants.STR_APP_TITLE
-                  , MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            this.textBox1.SelectionStart = txtIndex;
-            this.textBox1.SelectionLength = dlgSearch.txtFind.Length;
-            this.textBox1.ScrollToCaret();
-            this.txtIndex += dlgSearch.txtFind.Length;
-        }
-
-        private bool findNext()
-        {
-            if (this.myViewManager.getMode(
-                ViewManager.EViewMode.EModeBinary) ==
-                ViewManager.EViewMode.EModeBinary)
-            {
-                return findNextBin();
-            }
-            return findNextText();
-        }
-
-        private bool findNextBin()
-        {
-            if (this.myController.searchInDump(this.dlgSearch.txtFind,
-                this.mySharedData.basicInfo.hexDump.startIndex +
-                this.dlgSearch.txtFind.Length +
-                this.txtIndex))
-            {
-                this.myController.processOperation(TypeAction.EDumpUpdate);
-
-                if (this.mySharedData.basicInfo.hexDump.startIndex > 0)
-                {
-                    this.txtIndex = 16;
-                }
-                else this.txtIndex = 0;
-
-                if (this.mySharedData.basicInfo.hexDump.isHex == false)
-                {
-                    string strSub = textBox1.Text.Substring(0, this.txtIndex + this.dlgSearch.txtFind.Length);
-
-                    int ind = strSub.LastIndexOf(
-                        this.dlgSearch.txtFind,
-                        dlgSearch.sComparison
-                        );
-
-                    this.textBox1.SelectionStart = ind;
-                    this.textBox1.SelectionLength = this.dlgSearch.txtFind.Length;
-                }
-                else
-                {
-                    this.textBox1.SelectionStart = 139;
-                    this.textBox1.SelectionLength = 1;
-                }
-            }
-            else
-            {
-                this.txtIndex = -1;
-                return false;
-            }
-            return true;
-        }
-
-        private bool findNextText()
-        {
-            if (this.txtIndex == -1)
-                return false;
-
-            this.txtIndex = textBox1.Text.IndexOf(dlgSearch.txtFind
-                , this.txtIndex, dlgSearch.sComparison);
-
-            if (this.txtIndex == -1)
-                return false;
-
-            this.textBox1.SelectionStart = txtIndex;
-            this.textBox1.SelectionLength = dlgSearch.txtFind.Length;
-            this.textBox1.ScrollToCaret();
-            this.txtIndex += dlgSearch.txtFind.Length;
-            return true;
-        }
-   
+  
         private void appExit()
         {
             this.Close();
