@@ -28,14 +28,17 @@ namespace ShubusViewer
             return txt;
         }
 
-        public static string getCurrentVersionStr()
+        public static string getCurrentVersionAndCopyright()
         {
-            Version curVersion;
+            var assembly = AssemblyName.GetAssemblyName(Assembly.Load("ShubusViewer").Location);
 
-            try { curVersion = AssemblyName.GetAssemblyName(Assembly.Load("ShubusViewer").Location).Version; }
-            catch (Exception) { return string.Empty; }
+            // https://stackoverflow.com/questions/3127288/how-can-i-retrieve-the-assemblycompany-setting-in-assemblyinfo-cs
+            string copyright = ((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(
+                Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute), false))
+               .Copyright;
 
-            return curVersion.ToString();
+            var appInfo = string.Format("{0} {1}", assembly.Version.ToString(), copyright);
+            return appInfo;
         }
 
         public void CheckForNewVersion()

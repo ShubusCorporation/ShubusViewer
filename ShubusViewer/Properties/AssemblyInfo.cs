@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Shubus Corporation")]
 [assembly: AssemblyProduct("Shubus Viewer")]
-[assembly: AssemblyCopyright("Copyright © Shubus Corporation 2012 - 2020")]
+[assembly: AssemblyCopyright("© Shubus Corporation 2012 - 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

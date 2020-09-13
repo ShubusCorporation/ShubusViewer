@@ -106,20 +106,13 @@ namespace ShubusViewer
             {
                 _assembly = Assembly.GetExecutingAssembly();
                 _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream("ShubusViewer.Resources.About.txt"));
-            }
-            catch
-            {
-                MessageBox.Show("Error accessing resources!");
-            }
-            try
-            {
                 this.textBox1.Text = _textStreamReader.ReadToEnd();
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("Error writing text!");
+                MessageBox.Show("DlgAbout_Load Exception: " + ex.Message);
             }
-            this.Text += " v. " + AppUpdater.getCurrentVersionStr();
+            this.Text += " v. " + AppUpdater.getCurrentVersionAndCopyright();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
