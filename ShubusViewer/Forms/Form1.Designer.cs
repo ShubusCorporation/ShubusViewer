@@ -148,7 +148,7 @@
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.newToolStripMenuItem.Text = "Browse";
+            this.newToolStripMenuItem.Text = "Open";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
