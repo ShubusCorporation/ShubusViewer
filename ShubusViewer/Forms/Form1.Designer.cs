@@ -681,7 +681,7 @@
 			this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.button3.Font = new System.Drawing.Font("Lucida Console", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.button3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-			this.button3.Location = new System.Drawing.Point(3, 0);
+			this.button3.Location = new System.Drawing.Point(1, 0);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(16, 24);
 			this.button3.TabIndex = 6;
