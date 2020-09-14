@@ -134,11 +134,11 @@
             this.aboutToolStripMenuItem,
             this.setEncodingToolStripMenuItem,
             this.modeToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(20, 0);
+			this.menuStrip1.Location = new System.Drawing.Point(17, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(1096, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(1099, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -194,6 +194,7 @@
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.aboutToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
 			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(25, 20);
 			this.aboutToolStripMenuItem.Text = "?";
@@ -473,7 +474,7 @@
 			// 
 			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(4, 485);
+			this.checkBox1.Location = new System.Drawing.Point(2, 485);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(15, 14);
 			this.checkBox1.TabIndex = 5;
@@ -806,7 +807,7 @@
 			// 
 			this.textBox2.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.textBox2.Font = new System.Drawing.Font("Lucida Console", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.textBox2.Location = new System.Drawing.Point(356, 2);
+			this.textBox2.Location = new System.Drawing.Point(354, 2);
 			this.textBox2.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
 			this.textBox2.Name = "textBox2";
 			this.textBox2.Size = new System.Drawing.Size(479, 21);
@@ -823,12 +824,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.webBrowser1.IsWebBrowserContextMenuEnabled = false;
-			this.webBrowser1.Location = new System.Drawing.Point(0, 25);
+			this.webBrowser1.Location = new System.Drawing.Point(-3, 25);
 			this.webBrowser1.Margin = new System.Windows.Forms.Padding(4, 3, 0, 0);
 			this.webBrowser1.MinimumSize = new System.Drawing.Size(27, 20);
 			this.webBrowser1.Name = "webBrowser1";
 			this.webBrowser1.ScriptErrorsSuppressed = true;
-			this.webBrowser1.Size = new System.Drawing.Size(1116, 477);
+			this.webBrowser1.Size = new System.Drawing.Size(1119, 477);
 			this.webBrowser1.TabIndex = 4;
 			this.webBrowser1.Visible = false;
 			this.webBrowser1.Zoom = 100;
@@ -850,12 +851,12 @@
 			this.textBox1.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.textBox1.ForeColor = System.Drawing.Color.White;
 			this.textBox1.HideSelection = false;
-			this.textBox1.Location = new System.Drawing.Point(20, 24);
+			this.textBox1.Location = new System.Drawing.Point(17, 24);
 			this.textBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.textBox1.MaxLength = 10000001;
 			this.textBox1.Name = "textBox1";
 			this.textBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-			this.textBox1.Size = new System.Drawing.Size(1096, 478);
+			this.textBox1.Size = new System.Drawing.Size(1099, 478);
 			this.textBox1.TabIndex = 0;
 			this.textBox1.Text = "";
 			this.textBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBox1_MouseClick);
@@ -891,7 +892,7 @@
 			this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.MinimumSize = new System.Drawing.Size(555, 100);
 			this.Name = "Form1";
-			this.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+			this.Padding = new System.Windows.Forms.Padding(17, 0, 0, 0);
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "New text - Shubus Viewer";
 			this.Activated += new System.EventHandler(this.Form1_Activated);

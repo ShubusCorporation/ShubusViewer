@@ -15,7 +15,7 @@ namespace ShubusViewer // BackColor = Gainsboro
 {
     public partial class Form1 : Form
     {
-        private const int LEFT_PANEL_WIDTH = 16;
+        private const int LEFT_PANEL_WIDTH = 17;
         private int txtIndex;
         private AppController myController;
         private DlgDecoder dlgDecoder;
@@ -1246,6 +1246,9 @@ namespace ShubusViewer // BackColor = Gainsboro
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var dlgAbout = new DlgAbout(this.mySharedData);
+            this.aboutToolStripMenuItem.Enabled = false;
+            dlgAbout.FormClosed += new FormClosedEventHandler((s, a) => this.aboutToolStripMenuItem.Enabled = true);
+
             dlgAbout.Show(this);
 
             if (this.textBox1.Focused == false && this.webBrowser1.Visible == false)
