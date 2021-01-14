@@ -172,9 +172,13 @@ namespace ShubusViewer
         {
             if (e.KeyCode == Keys.Enter)
             {
-                this.DialogResult = this.searchButton.DialogResult;
-                this.txtFind = this.textBox1.Text;
-                this.doFindCB(); //  Callback FindFirst / FindNext
+                e.SuppressKeyPress = true;
+                // https://stackoverflow.com/questions/39533361/c-sharp-messagebox-casues-key-handler-to-ignore-surpresskeypress/39533520#39533520
+                this.BeginInvoke(new Action(() => {
+                    this.DialogResult = this.searchButton.DialogResult;
+                    this.txtFind = this.textBox1.Text;
+                    this.doFindCB(); //  Callback FindFirst / FindNext
+                }));
             }
         }
 
