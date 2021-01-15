@@ -2129,7 +2129,7 @@ namespace ShubusViewer // BackColor = Gainsboro
             {
                 if (!string.IsNullOrEmpty(this.textBox2.Text))
                 {
-                    this.myController.setFileName(this.textBox2.Text.Trim(new char[] { '\r', '\n', 's' }));
+                    this.myController.setFileName(this.textBox2.Text.Trim(new char[] { '\r', '\n', ' ' }));
                     this.myController.processOperation(TypeAction.EOpen);
                 }
             }
