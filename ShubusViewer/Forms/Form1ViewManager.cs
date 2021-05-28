@@ -103,18 +103,18 @@ namespace ShubusViewer
 
             private void updateButtons()
             {
+                bool isFullWindow = this.mainForm.FormBorderStyle == FormBorderStyle.None;
+                bool isWebGameMode = this.mainForm.mySharedData.fileType == TypeFileFormat.EWebGame;
+                bool isFileBrowsing = (this.mainForm.FormBorderStyle == FormBorderStyle.None) ||
+                    (this.currentViewMode & EViewMode.EModeNameDefault) == EViewMode.EModeNameDefault;
+
                 this.mainForm.button3.Visible 
                     = this.mainForm.LaunchButton.Visible
                     = this.mainForm.textBox2.Visible
-                    = (this.mainForm.FormBorderStyle != FormBorderStyle.None);
+                    = !isFullWindow;
 
-                bool vis = (this.mainForm.FormBorderStyle == FormBorderStyle.None) ||
-                    (this.currentViewMode & EViewMode.EModeNameDefault) == EViewMode.EModeNameDefault;
-
-                this.mainForm.button1.Visible = this.mainForm.button2.Visible
-                = (this.mainForm.mySharedData.fileType != TypeFileFormat.EWebGame);
-
-                this.mainForm.LArrButton.Visible = this.mainForm.RArrButton.Visible = !vis;
+                this.mainForm.button1.Visible = this.mainForm.button2.Visible = !isFullWindow && !isWebGameMode;
+                this.mainForm.LArrButton.Visible = this.mainForm.RArrButton.Visible = !isFileBrowsing;
                 this.mainForm.setScaleButtonsPosition();
             }
 
