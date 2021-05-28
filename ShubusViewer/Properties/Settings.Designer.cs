@@ -286,5 +286,20 @@ namespace ShubusViewer.Properties {
                 this["favListNotEmpty"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.google.com/search?q=")]
+        public string searchQueryGoogle {
+            get
+            {
+                return ((string)(this["searchQueryGoogle"]));
+            }
+            set
+            {
+                this["searchQueryGoogle"] = value;
+            }
+        }
+
     }
 }

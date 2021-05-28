@@ -47,7 +47,7 @@ namespace ShubusViewer // BackColor = Gainsboro
         private bool favListNotEmpty = true;
         private DlgManager mngrDlg;
         private FormWindowState currWinState;
-
+ 
         private void InitConfWatcher()
         {
             this.confWatcher = new FileSystemWatcher(Utils.Utils.CfgPath, "user.config");
@@ -843,10 +843,12 @@ namespace ShubusViewer // BackColor = Gainsboro
                 this.mySharedData.swPlayerVersion = ps.swPlayerVersion;
                 this.SetFont(ps.myFontName, ps.myFontStyle, ps.myBgColor, ps.myFgColor, ps.myFontSize);
             }
+
             this.checkBox1.Checked = !this.checkBox1.Checked;
             this.checkBox1.Checked = ps.myHorizontal;
             DlgView.AutoApplyColor = ps.autoApplyColor;
             DlgView.AutoApplyFont = ps.autoApplyFont;
+            this.mySharedData.searchQueryGoogle = ps.searchQueryGoogle;
 
             this.setEncodingItemTextChange();
             this.mySharedData.basicInfo.preferredFont = this.textBox1.Font.Name;

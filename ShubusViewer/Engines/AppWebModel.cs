@@ -30,7 +30,6 @@ namespace WebDataProcessor
         private const string localHost = "localhost";
         private const string localIP = "127.0.0.1";
         private const string browserHome = "about:blank";
-        private const string searchRequestGoogle = "http://www.google.com/#newwindow=1&q=";
 
         byte[] scriptBytes;
         private const string script = "PGhlYWQ+DQo8c2NyaXB0IGxhbmd1YWdlID0gIkphdmFTY3JpcHQiPg0KDQp2YXIgdGltZXI7DQoNCmZ1bmN0aW9uIGVudHJ5KGFyZykNCnsNCiAgICB2YXIgb2JqZWN0ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7DQogICAgdmFyIGRvY0JvZHkgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgnYm9keScpWzBdOw0KDQogICAgb2JqZWN0LmlkID0gInBpYyI7DQogICAgb2JqZWN0LmlubmVySFRNTCA9ICc8aW1nIHNyYz0ib2xkUGF0aCI+JzsNCiAgICBvYmplY3Quc3R5bGUuY3NzVGV4dCA9ICJQT1NJVElPTjogYWJzb2x1dGUiOw0KICAgIGRvY0JvZHkuYXBwZW5kQ2hpbGQob2JqZWN0KTsNCiAgICB6b29tKCk7DQp9DQoNCmZ1bmN0aW9uIHpvb20oKQ0Kew0KICAgIHZhciBvYmplY3QgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgicGljIik7DQogICAgdmFyIHBpY1dpZHRoID0gb2JqZWN0LmNsaWVudFdpZHRoOw0KICAgIHZhciB3d2lkdGggPSBkb2N1bWVudC5ib2R5LmNsaWVudFdpZHRoOw0KICAgIHZhciB3aGVpZ2h0ID0gZG9jdW1lbnQuYm9keS5jbGllbnRIZWlnaHQ7DQogICAgdmFyIHBpY0hlaWdodCA9IG9iamVjdC5jbGllbnRIZWlnaHQ7DQoNCiAgICBvYmplY3Quc3R5bGUucGl4ZWxMZWZ0ID0gKHd3aWR0aCA+IHBpY1dpZHRoKSA/ICh3d2lkdGggLSBwaWNXaWR0aCkgLyAyIDogMDsNCiAgICBvYmplY3Quc3R5bGUucGl4ZWxUb3AgID0gKHdoZWlnaHQgPiBwaWNIZWlnaHQpID8gICh3aGVpZ2h0IC0gcGljSGVpZ2h0KSAvIDIgOiAwOw0KICAgIHRpbWVyID0gc2V0VGltZW91dCgnem9vbSgpJywgMSk7DQp9DQoNCjwvc2NyaXB0Pg0KPC9oZWFkPg0KDQo8c3R5bGU+DQoNCiAgICBib2R5DQogICAgew0KICAgICAgIGJhY2tncm91bmQtY29sb3I6ICM2OTY5Njk7DQogICAgfQ0KDQo8L3N0eWxlPg0KDQo8Ym9keSBPbkxvYWQgPSAnZW50cnkoKTsnPjwvYm9keT4NCg0K";
@@ -210,7 +209,7 @@ namespace WebDataProcessor
         public void searchInGoogle(string aQuery)
         {
             aQuery = System.Web.HttpUtility.UrlEncode(aQuery);
-            System.Diagnostics.Process.Start(searchRequestGoogle + aQuery);
+            System.Diagnostics.Process.Start(this.mySharedData.searchQueryGoogle + aQuery);
         }
 
         public override bool changed

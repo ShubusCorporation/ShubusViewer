@@ -41,6 +41,7 @@ namespace ExtendedData
         public ModelInitData basicInfo;
         public TypeFileFormat fileType;
         public string swPlayerVersion = "11"; // Adobe ShockWave player version.
+        public string searchQueryGoogle = string.Empty;
 
         public AppExtendedData()
         {
