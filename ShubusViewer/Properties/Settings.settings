@@ -68,5 +68,8 @@
     <Setting Name="favListNotEmpty" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="searchQueryGoogle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.google.com/search?q=</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
