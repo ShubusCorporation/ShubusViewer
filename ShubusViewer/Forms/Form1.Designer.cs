@@ -824,12 +824,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.webBrowser1.IsWebBrowserContextMenuEnabled = false;
-			this.webBrowser1.Location = new System.Drawing.Point(-3, 25);
+			this.webBrowser1.Location = new System.Drawing.Point(0, 25);
 			this.webBrowser1.Margin = new System.Windows.Forms.Padding(4, 3, 0, 0);
 			this.webBrowser1.MinimumSize = new System.Drawing.Size(27, 20);
 			this.webBrowser1.Name = "webBrowser1";
 			this.webBrowser1.ScriptErrorsSuppressed = true;
-			this.webBrowser1.Size = new System.Drawing.Size(1119, 477);
+			this.webBrowser1.Size = new System.Drawing.Size(1099, 477);
 			this.webBrowser1.TabIndex = 4;
 			this.webBrowser1.Visible = false;
 			this.webBrowser1.Zoom = 100;
