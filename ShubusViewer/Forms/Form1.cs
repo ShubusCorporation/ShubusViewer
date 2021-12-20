@@ -2172,8 +2172,11 @@ namespace ShubusViewer // BackColor = Gainsboro
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             this.textBox2.TextChanged -= textBox2_TextChanged;
+            var oldSelection = this.textBox2.SelectionStart;
             this.textBox2.Text = this.textBox2.Text.Trim(new char[] { '\r', '\n', ' ' });
-            this.textBox2.SelectionStart = this.textBox2.Text.Length;
+            this.textBox2.SelectionStart = oldSelection > this.textBox2.Text.Length 
+                ? this.textBox2.Text.Length 
+                : oldSelection;
             this.textBox2.TextChanged += textBox2_TextChanged;
         }
     }
