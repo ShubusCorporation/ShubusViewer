@@ -7,7 +7,7 @@ namespace ShubusViewer
 {
     public partial class DlgMode : Form
     {
-        public bool autoClose = true;
+        public static bool autoClose = true;
         private AppController myController;
         private ToolStripMenuItem disabled;
 
@@ -90,13 +90,13 @@ namespace ShubusViewer
                 this.disabled.Enabled = true;
 
             this.otherToolStripMenuItem.Enabled = true;            
-            this.checkBox1.Checked = this.autoClose;
+            this.checkBox1.Checked = DlgMode.autoClose;
             //this.menuStrip1.Focus(); - CR 030 fix.
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            this.autoClose = this.checkBox1.Checked;
+            DlgMode.autoClose = this.checkBox1.Checked;
         }
         // Idea: http://stackoverflow.com/questions/298491/how-do-i-close-a-form-when-a-user-clicks-outside-the-forms-window
     }

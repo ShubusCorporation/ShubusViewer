@@ -831,7 +831,7 @@ namespace ShubusViewer // BackColor = Gainsboro
                 {
                     DlgDecoder.staticDlgManualItem = ps.textDlgDecoder;
                     DlgDecoder.staticDlgComboBoxItem = ps.itemDlgDecoder;
-                    this.dlgMode.autoClose = ps.dlgModeAutoClose;                    
+                    DlgMode.autoClose = ps.dlgModeAutoClose;                    
                     this.favListNotEmpty = ps.favListNotEmpty;
                 }
                 catch (Exception) { }
@@ -926,9 +926,7 @@ namespace ShubusViewer // BackColor = Gainsboro
             ps.myHorizontal = this.checkBox1.Checked;
             ps.autoApplyColor = DlgView.AutoApplyColor;
             ps.autoApplyFont = DlgView.AutoApplyFont;
-
-            if (this.dlgMode != null)
-                ps.dlgModeAutoClose = this.dlgMode.autoClose;
+            ps.dlgModeAutoClose = DlgMode.autoClose;
             
             if (this.appRecent != null)
                 ps.favListNotEmpty = this.appRecent.isListNotEmpty();
@@ -1983,6 +1981,12 @@ namespace ShubusViewer // BackColor = Gainsboro
 
         private void updateIfRecent()
         {
+            if (this.appRecent == null 
+                || this.mySharedData?.basicInfo == null
+                || this.mySharedData?.basicInfo.curFile == string.Empty)
+            {
+                return;
+            }
             try
             {
                 if (this.appRecent.isFileRecent(this.mySharedData.basicInfo.curFile))

@@ -75,41 +75,40 @@ namespace ShubusViewer
             if (this.mySharedData.fileType != TypeFileFormat.EWebPicture)
             {
                 this.webBrowser1.Zoom = 100;
+                return;
             }
-            else
+            Size picSize = new Size();
+            Size wbrSize = this.webBrowser1.Size;
+            bool fileNotBroken = true;
+
+            try
             {
-                Size picSize = new Size();
-                Size wbrSize = this.webBrowser1.Size;
-                bool fileNotBroken = true;
-
-                try
-                {
-                    picSize = Image.FromFile(this.mySharedData.basicInfo.curFile).Size;
-                }
-                catch { fileNotBroken = false; }
-                double newZoom = 100;
-
-                if (fileNotBroken)
-                {
-                    if (picSize.Width > wbrSize.Width || picSize.Height > wbrSize.Height)
-                    {
-                        double vert = 100;
-                        double hor = 100;
-
-                        if (picSize.Width > wbrSize.Width)
-                        {
-                            vert = ((double)wbrSize.Width / (double)picSize.Width) * 100;
-                        }
-                        if (picSize.Height > wbrSize.Height)
-                        {
-                            hor = ((double)wbrSize.Height / (double)picSize.Height) * 100;
-                        }
-                        newZoom = (vert > hor) ? hor : vert;
-                    }
-                }
-                this.webBrowser1.Zoom = (int)newZoom;
+                picSize = Image.FromFile(this.mySharedData.basicInfo.curFile).Size;
             }
+            catch { fileNotBroken = false; }
+            double newZoom = 100;
+
+            if (fileNotBroken)
+            {
+                if (picSize.Width > wbrSize.Width || picSize.Height > wbrSize.Height)
+                {
+                    double vert = 100;
+                    double hor = 100;
+
+                    if (picSize.Width > wbrSize.Width)
+                    {
+                        vert = ((double)wbrSize.Width / (double)picSize.Width) * 100;
+                    }
+                    if (picSize.Height > wbrSize.Height)
+                    {
+                        hor = ((double)wbrSize.Height / (double)picSize.Height) * 100;
+                    }
+                    newZoom = (vert > hor) ? hor : vert;
+                }
+            }
+            this.webBrowser1.Zoom = (int)newZoom;
         }
+
 
         private void HideLeftPanel()
         {

@@ -191,7 +191,10 @@ namespace ZoomBrowser
 
         public int Zoom
         {
-            get { return this.factor; }
+            get
+            {
+                return this.factor;
+            }
             set
             {
                 if (value > 0)
