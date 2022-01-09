@@ -1051,7 +1051,6 @@ namespace ShubusViewer // BackColor = Gainsboro
                 case Keys.M:
                     if (e.Control && this.modeToolStripMenuItem.Visible)
                     {
-                        this.dlgMode.StartPosition = FormStartPosition.CenterParent;
                         this.showModeDialog();
                         e.Handled = true;
                     }
@@ -1302,7 +1301,7 @@ namespace ShubusViewer // BackColor = Gainsboro
             this.setScaleButtonsToolTips();
         }
 
-        private void showModeDialog()
+        private void showModeDialog(FormStartPosition startPosition = FormStartPosition.Manual)
         {
             this.mySharedData.basicInfo.container = this.textBox1.Text; // Update it for browser mode.
             this.myController.setFileName(this.mySharedData.basicInfo.curFile);
@@ -1317,7 +1316,7 @@ namespace ShubusViewer // BackColor = Gainsboro
             {
                 newX = this.Location.X + this.Padding.Left;
             }
-            this.dlgMode.StartPosition = FormStartPosition.Manual;
+            this.dlgMode.StartPosition = startPosition;
             this.dlgMode.Location = new Point(newX, this.Location.Y + this.textBox1.Location.Y + this.menuStrip1.Size.Height);
             this.dlgMode.ShowDialog();
 
@@ -2170,7 +2169,7 @@ namespace ShubusViewer // BackColor = Gainsboro
 
         private void webBrowser1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            webBrowser1_PreviewKeyDown1(sender, e);
+           webBrowser1_PreviewKeyDown1(sender, e);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
