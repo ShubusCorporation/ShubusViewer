@@ -2116,11 +2116,12 @@ namespace ShubusViewer // BackColor = Gainsboro
         private void Form1_Resize(object sender, EventArgs e)
         {
             bool winStateChanged = this.currWinState != WindowState;
+            bool isMaximized = WindowState == FormWindowState.Maximized;
             this.currWinState = WindowState;
 
             if (this.mySharedData.fileType == TypeFileFormat.EWebPicture)
             {
-                doOnDocumentReady(this.webBrowser1, !winStateChanged); // Not recalc zum on window max/min - CR064
+                doOnDocumentReady(this.webBrowser1, isMaximized || !winStateChanged); // Not recalc zum on window min - CR064
             }
             else
             {
