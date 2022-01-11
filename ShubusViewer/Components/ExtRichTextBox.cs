@@ -131,31 +131,37 @@ namespace ShubusViewer.Components
             }
         }
 
+        new public void Paste(DataFormats.Format clipFormat)
+        {
+            this.removeWordLigthtening();
+            base.Paste(clipFormat);
+        }
+
         void removeWordLigthtening()
         {
-            if (this.mLightWordsQueue.Count > 0)
+            if (this.mLightWordsQueue.Count <= 0)
             {
-                appEventCallBack(TypeNotification.EDisableChangedNotification);
-               // LockWindow(this.Handle);
-
-                int sIn = this.GetCharIndexFromPosition(new Point(0, this.Font.Height / 2));
-                int sIn1 = this.SelectionStart;
-                int sL = this.SelectionLength;
-
-                while (this.mLightWordsQueue.Count > 0)
-                {
-                    var lightWordTuple = this.mLightWordsQueue.Dequeue();
-
-                    this.Select(lightWordTuple.Item1, lightWordTuple.Item2);
-                    this.SelectionBackColor = this.BackColor;
-                    this.SelectionColor = this.ForeColor;
-                }
-                this.Select(sIn, 0);
-                this.Select(sIn1, sL);
-
-              //  LockWindow(IntPtr.Zero);
-                appEventCallBack(TypeNotification.EEnableChangedNotification);
+                return;
             }
+            appEventCallBack(TypeNotification.EDisableChangedNotification);
+            // LockWindow(this.Handle);
+
+            int sIn = this.GetCharIndexFromPosition(new Point(0, this.Font.Height / 2));
+            int sIn1 = this.SelectionStart;
+            int sL = this.SelectionLength;
+
+            while (this.mLightWordsQueue.Count > 0)
+            {
+                var lightWordTuple = this.mLightWordsQueue.Dequeue();
+
+                this.Select(lightWordTuple.Item1, lightWordTuple.Item2);
+                this.SelectionBackColor = this.BackColor;
+                this.SelectionColor = this.ForeColor;
+            }
+            this.Select(sIn, 0);
+            this.Select(sIn1, sL);
+            //  LockWindow(IntPtr.Zero);
+            appEventCallBack(TypeNotification.EEnableChangedNotification);
         }
 
        private int TopLeftChar = 0;
