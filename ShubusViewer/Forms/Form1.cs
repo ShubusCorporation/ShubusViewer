@@ -385,20 +385,28 @@ namespace ShubusViewer // BackColor = Gainsboro
 
                 case TypeNotification.ETextRestored:
                     {
-                        string str = "";
+                        var sb = new StringBuilder(string.Empty);
 
                         if (this.myViewManager.getMode(ViewManager.EViewMode.EModeBrowser)
                             == ViewManager.EViewMode.EModeNone)
                         {
-                            str += this.getCurPosStr() + " - ";
+                            sb.AppendFormat("{0} - ", this.getCurPosStr());
                             this.myViewManager.setMode(ViewManager.EViewMode.EModeTextChanged, false);
                         }
                         else if (this.mySharedData.fileType != TypeFileFormat.EWebGame)
                         {
-                            str += Constants.STR_ZOOM + this.webBrowser1.Zoom.ToString() + "%" + " - ";
+                            sb.AppendFormat("{0}{1}{2}"
+                                , Constants.STR_ZOOM
+                                , this.webBrowser1.Zoom.ToString()
+                                , "% - "
+                             );
                         }
-                        str += mySharedData.basicInfo.curFile + " - " + Constants.STR_APP_TITLE;
-                        this.myCaption = str;
+                        sb.AppendFormat("{0}{1}{2}"
+                            , mySharedData.basicInfo.curFile
+                            , " - "
+                            , Constants.STR_APP_TITLE
+                         );
+                        this.myCaption = sb.ToString();
                     }
                     break;
 
@@ -508,6 +516,7 @@ namespace ShubusViewer // BackColor = Gainsboro
 
                 case TypeNotification.EOnFileSaved:
                     this.saveFileDialog.InitialDirectory = Utils.Utils.getPath(this.mySharedData.basicInfo.curFile);
+                    this.textBox2.Text = mySharedData.basicInfo.curFile;
 
                     if (this.watcher == null)
                     {
