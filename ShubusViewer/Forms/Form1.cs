@@ -2182,7 +2182,17 @@ namespace ShubusViewer // BackColor = Gainsboro
            webBrowser1_PreviewKeyDown1(sender, e);
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void RLArrButton_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    appExit();
+                    return;
+            }
+        }
+
+		private void textBox2_TextChanged(object sender, EventArgs e)
         {
             this.textBox2.TextChanged -= textBox2_TextChanged;
             var oldSelection = this.textBox2.SelectionStart;

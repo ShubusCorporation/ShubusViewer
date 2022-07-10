@@ -790,6 +790,7 @@
 			this.LArrButton.TabIndex = 8;
 			this.LArrButton.UseVisualStyleBackColor = true;
 			this.LArrButton.Click += new System.EventHandler(this.LArrButton_Click);
+			this.LArrButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RLArrButton_KeyDown);
 			// 
 			// RArrButton
 			// 
@@ -802,6 +803,7 @@
 			this.RArrButton.TabIndex = 9;
 			this.RArrButton.UseVisualStyleBackColor = true;
 			this.RArrButton.Click += new System.EventHandler(this.RArrButton_Click);
+			this.RArrButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RLArrButton_KeyDown);
 			// 
 			// textBox2
 			// 

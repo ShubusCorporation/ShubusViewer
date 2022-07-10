@@ -53,8 +53,8 @@ namespace FSProvider
             else if (extensions.Length > 1)
             {
                 ret = extensions.Contains(noExt) 
-                    ? dir.EnumerateFiles().Where(f => string.IsNullOrEmpty(f.Extension) || extensions.Contains(f.Extension))
-                    : dir.EnumerateFiles().Where(f => extensions.Contains(f.Extension));
+                    ? dir.EnumerateFiles().Where(f => string.IsNullOrEmpty(f.Extension) || extensions.Contains(f.Extension.ToLower()))
+                    : dir.EnumerateFiles().Where(f => extensions.Contains(f.Extension.ToLower()));
             }
             return ret;
         }
@@ -98,9 +98,9 @@ namespace FSProvider
             }
         }
 
-        private void CheckIfExists()
+        private void forgetIfRemoved()
         {
-            if (!File.Exists(this.files.ElementAt(this.curFileNumber)))
+            if (this.files.Count > 0 && !File.Exists(this.files.ElementAt(this.curFileNumber)))
             {
                 this.files.RemoveAt(this.curFileNumber);
 
@@ -121,7 +121,7 @@ namespace FSProvider
             }
             else this.curFileNumber++;
 
-            CheckIfExists();
+            forgetIfRemoved();
             return this.files.Count > 0 ?
                 this.files.ElementAt(this.curFileNumber) : "";
         }
@@ -136,7 +136,7 @@ namespace FSProvider
             }
             else this.curFileNumber--;
 
-            CheckIfExists();
+            forgetIfRemoved();
             return this.files.Count > 0 ?
                 this.files.ElementAt(this.curFileNumber) : "";
         }
